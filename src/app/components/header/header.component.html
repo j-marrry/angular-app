@@ -1,0 +1,27 @@
+<div class="bg-gray-800 w-full h-7rem grid grid-nogutter align-items-center text-3xl text-white">
+    <div class="col-1"></div>
+    <div class="col-1">
+        <img src="assets/images/logo.png" alt="logo" width="60" style="filter: invert(1);">
+    </div>
+    <div class="col-8 text-right">
+        <p>Привет, {{ (user$ | async)?.username }}!</p>
+    </div>
+    <div class="col-1 text-right">
+        <p-button label="ВЫЙТИ" [raised]="true" severity="secondary" icon="pi pi-sign-out" size="large" (onClick)="logout()"/>
+    </div>
+    <div class="col-1"></div>
+</div>
+
+<div class="bg-gray-900 w-full h-4rem grid grid-nogutter align-items-center text-white text-2xl mb-5">
+    <div class="col-1"></div>
+    <div class="col-auto">
+        <a routerLink="/" class="text-white no-underline">Главная</a>
+    </div>
+    <div class="col-auto col-offset-1">
+        <a routerLink="/edit-password" class="text-white no-underline">Сменить пароль</a>
+    </div>
+    <div class="col-auto col-offset-1">
+        <a routerLink="/users" class="text-white no-underline">Пользователи</a>
+    </div>
+    <div class="col-1"></div>
+</div>
