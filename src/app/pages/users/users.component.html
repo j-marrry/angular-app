@@ -2,7 +2,36 @@
     <app-header></app-header>
     <div class="grid grid-nogutter">
         <div class="col-1"></div>
-        <div class="col-10 text-center text-5xl font-bold">Список всех пользователей</div>
+        <div class="col-10 text-center text-5xl font-bold mb-5">Список всех пользователей</div>
+        <div class="col-1"></div>
+
+        <div class="col-12 text-center mb-5">
+            <p-button label="Добавить пользователя" [raised]="true" severity="contrast" size="large" (onClick)="addUser()"/>
+        </div>
+
+        <div class="col-1"></div>
+        <div class="col-10 shadow-2">
+            <p-table [value]="users" showGridlines [tableStyle]="{ 'min-width': '50rem' }">
+                <ng-template #header>
+                    <tr>
+                        <th>Логин</th>
+                        <th>Email</th>
+                        <th>Фамилия</th>
+                        <th>Имя</th>
+                        <th>Дата рождения</th>
+                    </tr>
+                </ng-template>
+                <ng-template #body let-user>
+                    <tr class="cursor-pointer hover:bg-gray-100" (click)="editUser(user.id)">
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.lastname }}</td>
+                        <td>{{ user.firstname }}</td>
+                        <td>{{ user.birthdate }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
         <div class="col-1"></div>
     </div>
 </div>

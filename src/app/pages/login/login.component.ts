@@ -23,7 +23,7 @@ import { AuthService } from '../../services/auth.service';
     MessagesModule,
     ToastModule
   ],
-  providers: [MessageService, UserService],
+  providers: [MessageService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -50,12 +50,12 @@ export class LoginComponent {
       return;
     }
 
-    this.userService.getData().subscribe({
-      next: (data: any) => {
-        this.users = data["userList"];
+    this.userService.getAllUsers().subscribe({
+      next: (users: User[]) => {
+        this.users = users;
         const user = this.users.find(u => u.username === this.login && u.password === this.password);
         if (user) {
-          this.authService.setUser(user);
+          this.authService.setCurrentUser(user);
           this.router.navigate(['/']);
         } else {
           this.messageService.add({

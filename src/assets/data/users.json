@@ -2,12 +2,37 @@
     "userList":
     [
         {
+            "id": 1,
             "username": "username1",
-            "password": "password1"
+            "password": "password1",
+            "email": "email1@mail.ru",
+            "lastname": "фамилия1",
+            "firstname": "имя1",
+            "middlename": "отчество1",
+            "birthdate": "2001-01-01",
+            "roles": ["admin"]
         },
         {
+            "id": 2,
             "username": "username2",
-            "password": "password2"
+            "password": "password2",
+            "email": "email2@mail.ru",
+            "lastname": "фамилия2",
+            "firstname": "имя2",
+            "middlename": "отчество2",
+            "birthdate": "2002-02-02",
+            "roles": ["user", "manager"]
+        },
+        {
+            "id": 3,
+            "username": "username3",
+            "password": "password3",
+            "email": "email3@mail.ru",
+            "lastname": "фамилия3",
+            "firstname": "имя3",
+            "middlename": "отчество3",
+            "birthdate": "2003-03-03",
+            "roles": []
         }
     ]
 }

@@ -21,7 +21,7 @@
         <a routerLink="/edit-password" class="text-white no-underline">Сменить пароль</a>
     </div>
     <div class="col-auto col-offset-1">
-        <a routerLink="/users" class="text-white no-underline">Пользователи</a>
+        <a routerLink="/users" class="text-white no-underline" *ngIf="isAdmin()">Пользователи</a>
     </div>
     <div class="col-1"></div>
 </div>

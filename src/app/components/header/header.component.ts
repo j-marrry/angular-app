@@ -10,16 +10,20 @@ import { User } from '../../models/user';
   selector: 'app-header',
   imports: [ButtonModule, RouterModule, CommonModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
   user$!: Observable<User | null>;
-  constructor(private authService: AuthService, private router: Router){}
-  ngOnInit(): void{
+  constructor(private authService: AuthService, private router: Router) {}
+  ngOnInit(): void {
     this.user$ = this.authService.currentUser$;
   }
-  logout(){
+  logout() {
     this.authService.logout();
     this.router.navigate(['/login']);
+  }
+  isAdmin(): boolean {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    return currentUser?.roles?.includes('admin');
   }
 }
