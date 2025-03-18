@@ -10,6 +10,7 @@ import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { ToastModule } from 'primeng/toast';
 import { User } from '../../models/user';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-edit-password',
@@ -20,7 +21,8 @@ import { User } from '../../models/user';
     RouterModule,
     FormsModule,
     MessagesModule,
-    ToastModule
+    ToastModule,
+    CommonModule
   ],
   providers: [MessageService],
   templateUrl: './edit-password.component.html',
@@ -31,6 +33,7 @@ export class EditPasswordComponent {
   newPassword: string = '';
   confirmPassword: string = '';
   currentUser: User | null = null;
+  passwordMismatch: boolean = false;
 
   constructor(
     private messageService: MessageService,
@@ -46,6 +49,10 @@ export class EditPasswordComponent {
     this.currentUser = this.authService.getCurrentUser();
   }
 
+  checkPasswords() {
+    this.passwordMismatch = this.newPassword !== this.confirmPassword;
+  }
+
   onSaveChanges() {
     if (!this.currentUser) {
       this.messageService.add({
@@ -57,41 +64,11 @@ export class EditPasswordComponent {
       return;
     }
 
-    if (!this.oldPassword || !this.newPassword || !this.confirmPassword) {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Ошибка',
-        detail: 'Заполните все поля!',
-        sticky: true,
-      });
-      return;
-    }
-
     if (this.oldPassword !== this.currentUser.password) {
       this.messageService.add({
         severity: 'error',
         summary: 'Ошибка',
         detail: 'Старый пароль введён неверно!',
-        sticky: true,
-      });
-      return;
-    }
-
-    if (this.newPassword.length < 6) {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Ошибка',
-        detail: 'Новый пароль должен содержать минимум 6 символов!',
-        sticky: true,
-      });
-      return;
-    }
-
-    if (this.newPassword !== this.confirmPassword) {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Ошибка',
-        detail: 'Пароли не совпадают!',
         sticky: true,
       });
       return;
@@ -114,5 +91,6 @@ export class EditPasswordComponent {
     this.oldPassword = '';
     this.newPassword = '';
     this.confirmPassword = '';
+    this.passwordMismatch = false;
   }
 }

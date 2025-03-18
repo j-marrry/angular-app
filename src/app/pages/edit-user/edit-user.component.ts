@@ -2,23 +2,95 @@ import { Component } from '@angular/core';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { ButtonModule } from 'primeng/button';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { MessagesModule } from 'primeng/messages';
+import { MessageService } from 'primeng/api';
+import { UserService } from '../../services/user.service';
+import { ToastModule } from 'primeng/toast';
+import { User } from '../../models/user';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { DatePickerModule } from 'primeng/datepicker';
+import { CommonModule } from '@angular/common';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @Component({
   selector: 'app-edit-user',
-  imports: [ InputGroupAddonModule, InputGroupModule, ButtonModule, RouterModule, FormsModule],
+  imports: [
+    InputGroupModule,
+    InputGroupAddonModule,
+    ButtonModule,
+    RouterModule,
+    FormsModule,
+    MessagesModule,
+    ToastModule,
+    FloatLabelModule,
+    DatePickerModule,
+    CommonModule,
+    CheckboxModule,
+  ],
+  providers: [MessageService],
   templateUrl: './edit-user.component.html',
-  styleUrl: './edit-user.component.scss'
+  styleUrl: './edit-user.component.scss',
 })
 export class EditUserComponent {
-  username: string='';
-  email: string='';
-  lastname: string='';
-  firstname: string='';
-  middlename: string='';
-onSaveChanges() {
+  id!: number;
+  username: string = '';
+  password: string = '';
+  email: string = '';
+  lastname: string = '';
+  firstname: string = '';
+  middlename: string = '';
+  birthdate: Date = new Date();
+  userroles: [] = [];
 
-}
+  roles = ['admin', 'user', 'manager'];
 
+  maxDate: Date = new Date();
+
+  constructor(
+    private route: ActivatedRoute,
+    private userService: UserService,
+    private router: Router,
+    private messageService: MessageService
+  ) {}
+
+  ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.id = +params['id'];
+      this.userService.getUserById(this.id).subscribe(user => {
+        if (user) {
+          this.username = user.username;
+          this.email = user.email;
+          this.lastname = user.lastname;
+          this.firstname = user.firstname;
+          this.middlename = user.middlename;
+          this.birthdate = new Date(user.birthdate);
+          this.userroles = user.roles || [];
+        }
+      });
+    });
+  }
+
+  onSaveChanges() {
+    this.userService.getUserById(this.id).subscribe(user => {
+      if(user?.password)
+      this.password = user.password;
+    })
+
+    const updatedUser: User = {
+      id: this.id,
+      username: this.username,
+      password: this.password,
+      email: this.email,
+      lastname: this.lastname,
+      firstname: this.firstname,
+      middlename: this.middlename,
+      birthdate: this.birthdate,
+      roles: this.userroles
+    };
+
+    this.userService.updateUser(updatedUser);
+    this.messageService.add({ severity: 'success', summary: 'Успех', detail: 'Пользователь обновлен!', sticky: true });
+  }
 }

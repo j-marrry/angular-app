@@ -62,8 +62,7 @@ export class LoginComponent {
             severity: 'error',
             summary: 'Ошибка входа',
             detail: 'Неверный логин или пароль',
-            sticky: true,
-            
+            sticky: true
           });
         }
       },

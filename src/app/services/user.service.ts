@@ -53,6 +53,10 @@ export class UserService {
       users[index] = updatedUser;
       this.authService.setAllUsers(users);
       localStorage.setItem('users', JSON.stringify(users));
+      const currentUser = this.authService.getCurrentUser();
+      if(currentUser && currentUser.id == updatedUser.id){
+        this.authService.setCurrentUser(updatedUser);
+      }
     }
   }
 
