@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MessagesModule } from 'primeng/messages';
 import { ToastModule } from 'primeng/toast';
 import { AuthService } from '../../services/auth.service';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,8 @@ import { AuthService } from '../../services/auth.service';
     FormsModule,
     HttpClientModule,
     MessagesModule,
-    ToastModule
+    ToastModule,
+    TranslocoModule
   ],
   providers: [MessageService],
   templateUrl: './login.component.html',
@@ -36,15 +38,16 @@ export class LoginComponent {
     private userService: UserService,
     private authService: AuthService,
     private router: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private translocoServise: TranslocoService
   ){}
 
   onLogin(){
     if (!this.login || !this.password) {
       this.messageService.add({
         severity: 'error',
-        summary: 'Ошибка входа',
-        detail: 'Заполните все поля',
+        summary: this.translocoServise.translate('msgError'),
+        detail: this.translocoServise.translate('msgFill'),
         sticky: true
       });
       return;
@@ -60,8 +63,8 @@ export class LoginComponent {
         } else {
           this.messageService.add({
             severity: 'error',
-            summary: 'Ошибка входа',
-            detail: 'Неверный логин или пароль',
+            summary: this.translocoServise.translate('msgError'),
+            detail: this.translocoServise.translate('msgUsernameOrPassword'),
             sticky: true
           });
         }
@@ -69,8 +72,8 @@ export class LoginComponent {
       error: () => {
         this.messageService.add({
           severity: 'error',
-          summary: 'Ошибка',
-          detail: 'Не удалось загрузить данные пользователей'
+          summary: this.translocoServise.translate('msgError'),
+          detail: this.translocoServise.translate('msgUserData'),
         });
       }
     });

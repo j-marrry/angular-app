@@ -14,6 +14,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { DatePickerModule } from 'primeng/datepicker';
 import { CommonModule } from '@angular/common';
 import { CheckboxModule } from 'primeng/checkbox';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-add-user',
@@ -29,6 +30,7 @@ import { CheckboxModule } from 'primeng/checkbox';
     DatePickerModule,
     CommonModule,
     CheckboxModule,
+    TranslocoModule
   ],
   providers: [MessageService],
   templateUrl: './add-user.component.html',
@@ -51,7 +53,8 @@ export class AddUserComponent {
   constructor(
     private userService: UserService,
     private router: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private translocoService: TranslocoService
   ) {}
 
   onSaveUser() {
@@ -70,8 +73,8 @@ export class AddUserComponent {
     this.userService.addUser(newUser);
     this.messageService.add({
       severity: 'success',
-      summary: 'Успех',
-      detail: 'Пользователь успешно добавлен!',
+      summary: this.translocoService.translate('msgSuccess'),
+      detail: this.translocoService.translate('msgAdd'),
       sticky: true,
     });
   }

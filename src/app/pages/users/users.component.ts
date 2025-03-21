@@ -7,10 +7,11 @@ import { Router } from '@angular/router';
 import { User } from '../../models/user';
 import { ButtonModule } from 'primeng/button';
 import { DatePipe } from '@angular/common';
+import { TranslocoModule } from '@jsverse/transloco'
 
 @Component({
   selector: 'app-users',
-  imports: [HeaderComponent, TableModule, HttpClientModule, ButtonModule],
+  imports: [HeaderComponent, TableModule, HttpClientModule, ButtonModule, TranslocoModule],
   providers: [UserService, DatePipe],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',

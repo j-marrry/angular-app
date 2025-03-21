@@ -1,30 +1,36 @@
 <div class="w-full h-screen bg-blue-50 flex flex-column justify-content-center align-items-center">
-    <div class="p-5 bg-white w-5 h-auto shadow-2 border-round ">
-        <div class="text-center mb-5">
-            <img src="assets/images/logo.png" alt="logo" height="60" class="mb-5">
-            <h1 class="text-4xl font-bold text-900">ВХОД В АККАУНТ</h1>
+    <ng-container *transloco="let t">
+        <div class="p-5 bg-white w-5 h-auto shadow-2 border-round ">
+            <div class="text-center mb-5">
+                <img src="assets/images/logo.png" alt="logo" height="60" class="mb-5">
+                <h1 class="text-4xl font-bold text-900">{{t('logIn')}}</h1>
+            </div>
+            <div class="w-full">
+                <form #loginForm="ngForm" (ngSubmit)="onLogin()" novalidate>
+                    <label for="login" class="text-lg">{{t('username:')}}</label>
+                    <p-inputgroup class="mb-5">
+                        <p-inputgroup-addon class="border-1 border-black-alpha-60">
+                            <i class="pi pi-user"></i>
+                        </p-inputgroup-addon>
+                        <input pInputText id="login" name="login" [(ngModel)]="login" #loginInput="ngModel" required
+                            class="w-full border-round-right border-1 border-black-alpha-60 p-2 text-xl" />
+                    </p-inputgroup>
+                    <label for="password" class="text-lg">{{t('password:')}}</label>
+                    <p-inputgroup class="mb-5">
+                        <p-inputgroup-addon class="border-1 border-black-alpha-60">
+                            <i class="pi pi-lock"></i>
+                        </p-inputgroup-addon>
+                        <input pInputText type="password" id="password" name="password" [(ngModel)]="password" required
+                            class="w-full border-round-right border-1 border-black-alpha-60 p-2 text-xl" />
+                    </p-inputgroup>
+                    <div class="w-full text-center">
+                        <p-button label="{{t('logIn')}}" [raised]="true" severity="contrast" size="large"
+                            icon="pi pi-check" type="submit" [disabled]="loginForm.invalid" />
+                    </div>
+                </form>
+                <p-toast position="top-center"></p-toast>
+            </div>
         </div>
-        <div class="w-full">
-            <form #loginForm="ngForm" (ngSubmit)="onLogin()" novalidate>
-                <label for="login" class="text-lg">Логин:</label>
-                <p-inputgroup class="mb-5">
-                    <p-inputgroup-addon class="border-1 border-black-alpha-60">
-                        <i class="pi pi-user"></i>
-                    </p-inputgroup-addon>
-                    <input pInputText id="login" name="login" [(ngModel)]="login" #loginInput="ngModel" required class="w-full border-round-right border-1 border-black-alpha-60 p-2 text-xl"/>
-                </p-inputgroup>
-                <label for="password" class="text-lg">Пароль:</label>
-                <p-inputgroup class="mb-5">
-                    <p-inputgroup-addon class="border-1 border-black-alpha-60">
-                        <i class="pi pi-lock"></i>
-                    </p-inputgroup-addon>
-                    <input pInputText type="password" id="password" name="password" [(ngModel)]="password" required class="w-full border-round-right border-1 border-black-alpha-60 p-2 text-xl"/>
-                </p-inputgroup>
-                <div class="w-full text-center">
-                    <p-button label="ВОЙТИ" [raised]="true" severity="contrast" size="large" icon="pi pi-check" type="submit" [disabled]="loginForm.invalid"/>
-                </div>
-            </form>
-            <p-toast position="top-center"></p-toast>
-        </div>
-    </div>
+    </ng-container>
+
 </div>

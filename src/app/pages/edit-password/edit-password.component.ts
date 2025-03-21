@@ -11,6 +11,7 @@ import { AuthService } from '../../services/auth.service';
 import { ToastModule } from 'primeng/toast';
 import { User } from '../../models/user';
 import { CommonModule } from '@angular/common';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-edit-password',
@@ -22,7 +23,8 @@ import { CommonModule } from '@angular/common';
     FormsModule,
     MessagesModule,
     ToastModule,
-    CommonModule
+    CommonModule,
+    TranslocoModule
   ],
   providers: [MessageService],
   templateUrl: './edit-password.component.html',
@@ -38,7 +40,8 @@ export class EditPasswordComponent {
   constructor(
     private messageService: MessageService,
     private userService: UserService,
-    private authService: AuthService
+    private authService: AuthService,
+    private translocoService: TranslocoService
   ) {}
 
   ngOnInit() {
@@ -57,8 +60,8 @@ export class EditPasswordComponent {
     if (!this.currentUser) {
       this.messageService.add({
         severity: 'error',
-        summary: 'Ошибка',
-        detail: 'Ошибка авторизации. Пожалуйста, войдите в систему заново.',
+        summary: this.translocoService.translate('msgError'),
+        detail: this.translocoService.translate('msgAuth'),
         sticky: true,
       });
       return;
@@ -67,8 +70,8 @@ export class EditPasswordComponent {
     if (this.oldPassword !== this.currentUser.password) {
       this.messageService.add({
         severity: 'error',
-        summary: 'Ошибка',
-        detail: 'Старый пароль введён неверно!',
+        summary: this.translocoService.translate('msgError'),
+        detail: this.translocoService.translate('msgOldPassword'),
         sticky: true,
       });
       return;
@@ -84,8 +87,8 @@ export class EditPasswordComponent {
 
     this.messageService.add({
       severity: 'success',
-      summary: 'Успех!',
-      detail: 'Пароль успешно изменён!',
+      summary: this.translocoService.translate('msgSuccess'),
+      detail: this.translocoService.translate('msgPasswordChange'),
     });
 
     this.oldPassword = '';

@@ -1,111 +1,125 @@
 <div class="w-full min-h-screen h-max bg-blue-50 flex flex-column justify-content-center align-items-center">
-    <div class="p-5 bg-white w-5 h-auto shadow-2 border-round">
-        <div class="text-center mb-5">
-            <img src="assets/images/logo.png" alt="logo" height="60" class="mb-5" />
-            <h1 class="text-4xl font-bold text-900">ДОБАВЛЕНИЕ ПОЛЬЗОВАТЕЛЯ</h1>
-        </div>
-        <div class="w-full">
-            <form #addUserForm="ngForm" (ngSubmit)="onSaveUser()" novalidate>
-                <label for="username" class="text-lg">Логин:</label>
-                <p-inputgroup>
-                    <p-inputgroup-addon class="border-1 border-black-alpha-60">
-                        <i class="pi pi-user"></i>
-                    </p-inputgroup-addon>
-                    <input pInputText id="username"
-                        class="w-full border-round-right border-1 border-black-alpha-60 p-2 text-xl"
-                        [(ngModel)]="username" name="username" required  minlength="5" maxlength="20"
-                        pattern="[A-Za-z0-9]{5,20}" #usernameRef="ngModel"/>
-                </p-inputgroup>
-                <div *ngIf="usernameRef.invalid && usernameRef.touched" class="text-red-500">Логин должен содержать 5-20 латинских букв или цифр.</div>
-                <div class="mb-5"></div>
-
-                <label for="password" class="text-lg">Пароль:</label>
-                <p-inputgroup>
-                    <p-inputgroup-addon class="border-1 border-black-alpha-60">
-                        <i class="pi pi-lock"></i>
-                    </p-inputgroup-addon>
-                    <input pInputText id="password" type="password"
-                        class="w-full border-round-right border-1 border-black-alpha-60 p-2 text-xl"
-                        [(ngModel)]="password" name="password" required #passwordRef="ngModel"/>
-                </p-inputgroup>
-                <div *ngIf="passwordRef.invalid && passwordRef.touched" class="text-red-500">Пароль обязателен.</div>
-                <div class="mb-5"></div>
-
-                <label for="email" class="text-lg">Эл. почта:</label>
-                <p-inputgroup>
-                    <p-inputgroup-addon class="border-1 border-black-alpha-60">
-                        <i class="pi pi-at"></i>
-                    </p-inputgroup-addon>
-                    <input pInputText id="email" type="email"
-                        class="w-full border-round-right border-1 border-black-alpha-60 p-2 text-xl" [(ngModel)]="email"
-                        name="email" required email #emailRef="ngModel" />
-                </p-inputgroup>
-                <div *ngIf="emailRef.invalid && emailRef.touched" class="text-red-500">Введите корректный email.</div>
-                <div class="mb-5"></div>
-
-                <label for="lastname" class="text-lg">Фамилия:</label>
-                <p-inputgroup>
-                    <p-inputgroup-addon class="border-1 border-black-alpha-60">
-                        <i class="pi pi-info-circle"></i>
-                    </p-inputgroup-addon>
-                    <input pInputText id="lastname"
-                        class="w-full border-round-right border-1 border-black-alpha-60 p-2 text-xl"
-                        [(ngModel)]="lastname" name="lastname" required minlength="2" maxlength="25"
-                        pattern="[А-Яа-яЁёA-Za-z]{2,25}" #lastnameRef="ngModel"/>
-                </p-inputgroup>
-                <div *ngIf="lastnameRef.invalid && lastnameRef.touched" class="text-red-500">Фамилия должна содержать 2-25 букв.</div>
-                <div class="mb-5"></div>
-
-                <label for="firstname" class="text-lg">Имя:</label>
-                <p-inputgroup>
-                    <p-inputgroup-addon class="border-1 border-black-alpha-60">
-                        <i class="pi pi-info-circle"></i>
-                    </p-inputgroup-addon>
-                    <input pInputText id="firstname"
-                        class="w-full border-round-right border-1 border-black-alpha-60 p-2 text-xl"
-                        [(ngModel)]="firstname" name="firstname" required minlength="2" maxlength="25"
-                        pattern="[А-Яа-яЁёA-Za-z]{2,25}" #firstnameRef="ngModel"/>
-                </p-inputgroup>
-                <div *ngIf="firstnameRef.invalid && firstnameRef.touched" class="text-red-500">Имя должно содержать 2-25 букв.</div>
-                <div class="mb-5"></div>
-
-                <label for="middlename" class="text-lg">Отчество:</label>
-                <p-inputgroup>
-                    <p-inputgroup-addon class="border-1 border-black-alpha-60">
-                        <i class="pi pi-info-circle"></i>
-                    </p-inputgroup-addon>
-                    <input pInputText id="middlename"
-                        class="w-full border-round-right border-1 border-black-alpha-60 p-2 text-xl"
-                        [(ngModel)]="middlename" name="middlename" required minlength="2" maxlength="25"
-                        pattern="[А-Яа-яЁёA-Za-z]{2,25}" #middlenameRef="ngModel"/>
-                </p-inputgroup>
-                <div *ngIf="middlenameRef.invalid && middlenameRef.touched" class="text-red-500">Отчество должно содержать 2-25 букв.</div>
-                <div class="mb-5"></div>
-
-                <label for="birthdate" class="text-lg">Дата рождения:</label>
-                <div>
-                    <p-datepicker [(ngModel)]="birthdate" name="birthdate" [showIcon]="true" [iconDisplay]="'input'" [maxDate]="maxDate" required #birthdateRef="ngModel"/></div>
-                    <div *ngIf="birthdateRef.invalid && birthdateRef.touched" class="text-red-500">Дата рождения обязательна и должна быть в прошлом.</div>
+    <ng-container *transloco="let t">
+        <div class="p-5 bg-white w-5 h-auto shadow-2 border-round">
+            <div class="text-center mb-5">
+                <img src="assets/images/logo.png" alt="logo" height="60" class="mb-5" />
+                <h1 class="text-4xl font-bold text-900">{{t('addingUser')}}</h1>
+            </div>
+            <div class="w-full">
+                <form #addUserForm="ngForm" (ngSubmit)="onSaveUser()" novalidate>
+                    <label for="username" class="text-lg">{{t('username:')}}</label>
+                    <p-inputgroup>
+                        <p-inputgroup-addon class="border-1 border-black-alpha-60">
+                            <i class="pi pi-user"></i>
+                        </p-inputgroup-addon>
+                        <input pInputText id="username"
+                            class="w-full border-round-right border-1 border-black-alpha-60 p-2 text-xl"
+                            [(ngModel)]="username" name="username" required minlength="5" maxlength="20"
+                            pattern="[A-Za-z0-9]{5,20}" #usernameRef="ngModel" />
+                    </p-inputgroup>
+                    <div *ngIf="usernameRef.invalid && usernameRef.touched" class="text-red-500">
+                        {{t('validation.username')}}</div>
                     <div class="mb-5"></div>
 
-                <label for="roles" class="text-lg">Роли:</label>
-                <div class="mb-5">
-                    <div *ngFor="let role of roles" class="flex items-center">
-                        <p-checkbox [inputId]="role" name="roles" [value]="role" [(ngModel)]="userroles" class="mt-2" />
-                        <label [for]="role" class="ml-2 mt-2"> {{ role }} </label>
-                    </div>
-                </div>
-                
-                <div class="w-full text-center mb-5">
-                    <p-button type="submit" label="ДОБАВИТЬ" [raised]="true" severity="contrast" size="large" icon="pi pi-check" [disabled]="addUserForm.invalid"/>
-                </div>
-                <div class="w-full text-center text-lg">
-                    <a routerLink="/users" class="text-black-alpha-90 underline">К списку пользователей</a>
-                </div>
+                    <label for="password" class="text-lg">{{t('password:')}}</label>
+                    <p-inputgroup>
+                        <p-inputgroup-addon class="border-1 border-black-alpha-60">
+                            <i class="pi pi-lock"></i>
+                        </p-inputgroup-addon>
+                        <input pInputText id="password" type="password"
+                            class="w-full border-round-right border-1 border-black-alpha-60 p-2 text-xl"
+                            [(ngModel)]="password" name="password" required #passwordRef="ngModel" />
+                    </p-inputgroup>
+                    <div *ngIf="passwordRef.invalid && passwordRef.touched" class="text-red-500">
+                        {{t('validation.password')}}</div>
+                    <div class="mb-5"></div>
 
-            </form>
-            <p-toast position="top-center">
-            </p-toast>
+                    <label for="email" class="text-lg">{{t('email:')}}</label>
+                    <p-inputgroup>
+                        <p-inputgroup-addon class="border-1 border-black-alpha-60">
+                            <i class="pi pi-at"></i>
+                        </p-inputgroup-addon>
+                        <input pInputText id="email" type="email"
+                            class="w-full border-round-right border-1 border-black-alpha-60 p-2 text-xl"
+                            [(ngModel)]="email" name="email" required email #emailRef="ngModel" />
+                    </p-inputgroup>
+                    <div *ngIf="emailRef.invalid && emailRef.touched" class="text-red-500">{{t('validation.email')}}
+                    </div>
+                    <div class="mb-5"></div>
+
+                    <label for="lastname" class="text-lg">{{t('lastname:')}}</label>
+                    <p-inputgroup>
+                        <p-inputgroup-addon class="border-1 border-black-alpha-60">
+                            <i class="pi pi-info-circle"></i>
+                        </p-inputgroup-addon>
+                        <input pInputText id="lastname"
+                            class="w-full border-round-right border-1 border-black-alpha-60 p-2 text-xl"
+                            [(ngModel)]="lastname" name="lastname" required minlength="2" maxlength="25"
+                            pattern="[А-Яа-яЁёA-Za-z]{2,25}" #lastnameRef="ngModel" />
+                    </p-inputgroup>
+                    <div *ngIf="lastnameRef.invalid && lastnameRef.touched" class="text-red-500">
+                        {{t('validation.lastname')}}</div>
+                    <div class="mb-5"></div>
+
+                    <label for="firstname" class="text-lg">{{t('firstname:')}}</label>
+                    <p-inputgroup>
+                        <p-inputgroup-addon class="border-1 border-black-alpha-60">
+                            <i class="pi pi-info-circle"></i>
+                        </p-inputgroup-addon>
+                        <input pInputText id="firstname"
+                            class="w-full border-round-right border-1 border-black-alpha-60 p-2 text-xl"
+                            [(ngModel)]="firstname" name="firstname" required minlength="2" maxlength="25"
+                            pattern="[А-Яа-яЁёA-Za-z]{2,25}" #firstnameRef="ngModel" />
+                    </p-inputgroup>
+                    <div *ngIf="firstnameRef.invalid && firstnameRef.touched" class="text-red-500">
+                        {{t('validation.firstname')}}</div>
+                    <div class="mb-5"></div>
+
+                    <label for="middlename" class="text-lg">{{t('middlename:')}}</label>
+                    <p-inputgroup>
+                        <p-inputgroup-addon class="border-1 border-black-alpha-60">
+                            <i class="pi pi-info-circle"></i>
+                        </p-inputgroup-addon>
+                        <input pInputText id="middlename"
+                            class="w-full border-round-right border-1 border-black-alpha-60 p-2 text-xl"
+                            [(ngModel)]="middlename" name="middlename" required minlength="2" maxlength="25"
+                            pattern="[А-Яа-яЁёA-Za-z]{2,25}" #middlenameRef="ngModel" />
+                    </p-inputgroup>
+                    <div *ngIf="middlenameRef.invalid && middlenameRef.touched" class="text-red-500">
+                        {{t('validation.middlename')}}</div>
+                    <div class="mb-5"></div>
+
+                    <label for="birthdate" class="text-lg">{{t('birthdate:')}}</label>
+                    <div>
+                        <p-datepicker [(ngModel)]="birthdate" name="birthdate" [showIcon]="true" [iconDisplay]="'input'"
+                            [maxDate]="maxDate" required #birthdateRef="ngModel" />
+                    </div>
+                    <div *ngIf="birthdateRef.invalid && birthdateRef.touched" class="text-red-500">
+                        {{t('validation.birthdate')}}</div>
+                    <div class="mb-5"></div>
+
+                    <label for="roles" class="text-lg">{{t('roles')}}</label>
+                    <div class="mb-5">
+                        <div *ngFor="let role of roles" class="flex items-center">
+                            <p-checkbox [inputId]="role" name="roles" [value]="role" [(ngModel)]="userroles"
+                                class="mt-2" />
+                            <label [for]="role" class="ml-2 mt-2"> {{ role }} </label>
+                        </div>
+                    </div>
+
+                    <div class="w-full text-center mb-5">
+                        <p-button type="submit" label="{{t('add')}}" [raised]="true" severity="contrast" size="large"
+                            icon="pi pi-check" [disabled]="addUserForm.invalid" />
+                    </div>
+                    <div class="w-full text-center text-lg">
+                        <a routerLink="/users" class="text-black-alpha-90 underline">{{t('backToUsers')}}</a>
+                    </div>
+
+                </form>
+                <p-toast position="top-center">
+                </p-toast>
+            </div>
         </div>
-    </div>
+    </ng-container>
+
 </div>

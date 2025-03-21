@@ -1,0 +1,65 @@
+{
+  "greeting": "Hello, {{username}}!",
+  "logout": "LOGOUT",
+  "home": "Home",
+  "changePassword": "Change Password",
+  "users": "Users",
+
+  "usersList": "List of all users",
+  "addUser": "Add User",
+  "login": "Username",
+  "email": "Email",
+  "lastname": "Last Name",
+  "firstname": "First Name",
+  "birthdate": "Date of Birth",
+
+  "editPassword": "EDIT PASSWORD",
+  "oldPassword": "Old password:",
+  "newPassword": "New password:",
+  "confirmPassword": "Confirm password:",
+  "requiredField": "This field is required.",
+  "minLength": "Minimum 8 characters.",
+  "passwordMismatch": "Passwords do not match.",
+  "change": "CHANGE",
+  "tohome": "Home",
+
+  "editUser": "EDIT USER",
+  "username:": "Username:",
+  "password:": "Password:",
+  "email:": "Email:",
+  "lastname:": "Last Name:",
+  "firstname:": "First Name:",
+  "middlename:": "Middle Name:",
+  "birthdate:": "Date of Birth:",
+  "roles": "Roles:",
+  "save": "SAVE",
+  "backToUsers": "Back to User List",
+  "validation": {
+    "username": "Username must contain 5-20 Latin letters or digits.",
+    "password": "Password is required.",
+    "email": "Enter a valid email.",
+    "lastname": "Last name must contain 2-25 letters.",
+    "firstname": "First name must contain 2-25 letters.",
+    "middlename": "Middle name must contain 2-25 letters.",
+    "birthdate": "Birthdate is required and must be in the past."
+  },
+  
+  "addingUser": "ADD USER",
+  "add": "ADD",
+
+  "notFound": "The page you are looking for was not found :(",
+
+  "logIn": "LOG IN",
+  "logIn2": "LOGIN",
+
+  "msgSuccess": "Success",
+  "msgAdd": "User added successfully!",
+  "msgError": "Error",
+  "msgOldPassword": "Old password is incorrect!",
+  "msgAuth": "Authorization error. Please log in again.",
+  "msgPasswordChange": "Password successfully changed!",
+  "msgUserUpdate": "User updated!",
+  "msgFill": "Fill in all fields",
+  "msgUsernameOrPassword": "Invalid login or password",
+  "msgUserData": "Failed to load user data"
+}

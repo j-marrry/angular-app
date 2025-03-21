@@ -1,7 +1,11 @@
 <div class="grid w-full grid-nogutter">
-    <div class="col-12 bg-blue-50 h-screen flex flex-column text-center justify-content-center align-items-center p-7">
-        <img src="assets/images/404.jpg" alt="PageNotFound" class="w-3 m-5">
-        <p class="text-5xl font-bold">404</p>
-        <p class="text-3xl font-bold">Страница, которую вы ищете, не найдена :(</p>
-    </div>
+    <ng-container *transloco="let t">
+        <div
+            class="col-12 bg-blue-50 h-screen flex flex-column text-center justify-content-center align-items-center p-7">
+            <img src="assets/images/404.jpg" alt="PageNotFound" class="w-3 m-5">
+            <p class="text-5xl font-bold">404</p>
+            <p class="text-3xl font-bold">{{t('notFound')}}</p>
+        </div>
+    </ng-container>
+
 </div>

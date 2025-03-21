@@ -13,6 +13,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { DatePickerModule } from 'primeng/datepicker';
 import { CommonModule } from '@angular/common';
 import { CheckboxModule } from 'primeng/checkbox';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-edit-user',
@@ -28,6 +29,7 @@ import { CheckboxModule } from 'primeng/checkbox';
     DatePickerModule,
     CommonModule,
     CheckboxModule,
+    TranslocoModule
   ],
   providers: [MessageService],
   templateUrl: './edit-user.component.html',
@@ -52,7 +54,8 @@ export class EditUserComponent {
     private route: ActivatedRoute,
     private userService: UserService,
     private router: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private translocoService: TranslocoService
   ) {}
 
   ngOnInit(): void {
@@ -91,6 +94,6 @@ export class EditUserComponent {
     };
 
     this.userService.updateUser(updatedUser);
-    this.messageService.add({ severity: 'success', summary: 'Успех', detail: 'Пользователь обновлен!', sticky: true });
+    this.messageService.add({ severity: 'success', summary: this.translocoService.translate('msgSuccess'), detail: this.translocoService.translate('msgUserUpdate'), sticky: true });
   }
 }

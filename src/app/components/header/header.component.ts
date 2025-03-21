@@ -5,10 +5,12 @@ import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { User } from '../../models/user';
+import { LangComponent } from "../lang/lang.component";
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-header',
-  imports: [ButtonModule, RouterModule, CommonModule],
+  imports: [ButtonModule, RouterModule, CommonModule, LangComponent, TranslocoModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
