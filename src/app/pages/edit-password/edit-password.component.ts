@@ -57,7 +57,7 @@ export class EditPasswordComponent {
   }
 
   onSaveChanges() {
-    if (!this.currentUser) {
+    /*if (!this.currentUser) {
       this.messageService.add({
         severity: 'error',
         summary: this.translocoService.translate('msgError'),
@@ -67,33 +67,31 @@ export class EditPasswordComponent {
       return;
     }
 
-    if (this.oldPassword !== this.currentUser.password) {
-      this.messageService.add({
-        severity: 'error',
-        summary: this.translocoService.translate('msgError'),
-        detail: this.translocoService.translate('msgOldPassword'),
-        sticky: true,
-      });
-      return;
-    }
+    this.userService.checkPassword(this.currentUser.id, this.oldPassword).subscribe(isValid => {
+      if (!isValid) {
+        this.messageService.add({
+          severity: 'error',
+          summary: this.translocoService.translate('msgError'),
+          detail: this.translocoService.translate('msgOldPassword'),
+          sticky: true,
+        });
+        return;
+      }
+      this.userService.changePassword(this.currentUser.id, this.newPassword).subscribe(() => {
+        this.messageService.add({
+          severity: 'success',
+          summary: this.translocoService.translate('msgSuccess'),
+          detail: this.translocoService.translate('msgPasswordChange'),
+        });
 
-    const updatedUser = {
-      ...this.currentUser,
-      password: this.newPassword,
-    };
-
-    this.authService.setCurrentUser(updatedUser);
-    this.userService.updatePassword(this.currentUser.id, this.newPassword);
-
-    this.messageService.add({
-      severity: 'success',
-      summary: this.translocoService.translate('msgSuccess'),
-      detail: this.translocoService.translate('msgPasswordChange'),
-    });
+        const updatedUser: User = { ...this.currentUser, password: this.newPassword };
+        this.authService.setCurrentUser(updatedUser);
 
     this.oldPassword = '';
     this.newPassword = '';
     this.confirmPassword = '';
     this.passwordMismatch = false;
-  }
+  });
+});*/
+}
 }

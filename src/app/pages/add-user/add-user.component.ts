@@ -58,19 +58,18 @@ export class AddUserComponent {
   ) {}
 
   onSaveUser() {
-    const newUser: User = {
-      id: Date.now(),
+    const newUser: any = {
       username: this.username,
       password: this.password,
       email: this.email,
       lastname: this.lastname,
       firstname: this.firstname,
-      middlename: this.middlename,
-      birthdate: this.birthdate,
+      patronymic: this.middlename,
+      birthday: this.birthdate,
       roles: this.userroles,
     };
 
-    this.userService.addUser(newUser);
+    this.userService.addUser(newUser).subscribe();
     this.messageService.add({
       severity: 'success',
       summary: this.translocoService.translate('msgSuccess'),

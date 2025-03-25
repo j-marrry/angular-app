@@ -1,4 +1,4 @@
-import { inject } from '@angular/core';
+/*import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 
 export const adminGuard: CanActivateFn = (route, state) => {
@@ -14,3 +14,4 @@ export const adminGuard: CanActivateFn = (route, state) => {
   
     return true;
 };
+*/

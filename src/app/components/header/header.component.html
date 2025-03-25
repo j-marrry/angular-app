@@ -26,7 +26,8 @@
             <a routerLink="/edit-password" class="text-white no-underline">{{ t('changePassword') }}</a>
         </div>
         <div class="col-auto col-offset-1">
-            <a routerLink="/users" class="text-white no-underline" *ngIf="isAdmin()">{{ t('users') }}</a>
+            <!-- <a routerLink="/users" class="text-white no-underline" *ngIf="isAdmin()">{{ t('users') }}</a> -->
+            <a routerLink="/users" class="text-white no-underline" >{{ t('users') }}</a>
         </div>
         <div class="col-1"></div>
         <app-lang></app-lang>

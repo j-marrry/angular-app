@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { User } from '../models/user';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ import { User } from '../models/user';
 export class UserService {
   private usersUrl = 'assets/data/users.json';
 
-  constructor(private http: HttpClient, private authService: AuthService) {
+  constructor(private http: HttpClient, private authService: AuthService, private apiService: ApiService) {
     this.initializeUsers();
   }
 
@@ -26,27 +27,43 @@ export class UserService {
   }
 
   getAllUsers(): Observable<User[]> {
-    const users = this.authService.getAllUsers();
-    return new Observable((observer) => {
-      observer.next(users);
-      observer.complete();
-    });
-  }
-
-  getUserById(userId: number): Observable<User | undefined> {
-    return this.getAllUsers().pipe(
-      map((users: User[]) => users.find((user) => user.id === userId))
+    return this.apiService.getUsers().pipe(
+      map((users: any[]) =>
+        users.map(user => ({
+          ...user,
+          birthdate: user.birthday
+        }))
+      )
     );
   }
 
-  addUser(newUser: User): void {
+  /*getUserById(userId: number): Observable<User | undefined> {
+    return this.getAllUsers().pipe(
+      map((users: User[]) => users.find((user) => user.id === userId))
+    );
+  }*/
+
+  getUserById(userId: number): Observable<User | undefined> {
+    return this.apiService.getUserById(userId).pipe(
+      map((user: any) => ({
+        ...user,
+        birthdate: user.birthday,
+        middlename: user.patronymic
+      }))
+    );
+  }
+
+  /*addUser(newUser: User): void {
     const users = this.authService.getAllUsers();
     users.push(newUser);
     this.authService.setAllUsers(users);
     localStorage.setItem('users', JSON.stringify(users));
+  }*/
+ addUser(newUser: User): Observable<User> {
+    return this.apiService.addUser(newUser);
   }
 
-  updateUser(updatedUser: User): void {
+  /*updateUser(updatedUser: User): void {
     const users = this.authService.getAllUsers();
     const index = users.findIndex((user: User) => user.id === updatedUser.id);
     if (index !== -1) {
@@ -58,16 +75,24 @@ export class UserService {
         this.authService.setCurrentUser(updatedUser);
       }
     }
+  }*/
+
+    updateUser(updatedUser: User): Observable<User> {
+    return this.apiService.updateUser(updatedUser);
   }
 
-  deleteUser(userId: number): void {
+  /*deleteUser(userId: number): void {
     let users = this.authService.getAllUsers();
     users = users.filter((user: User) => user.id !== userId);
     this.authService.setAllUsers(users);
     localStorage.setItem('users', JSON.stringify(users));
-  }
+  }*/
 
-  updatePassword(userId: number, newPassword: string): void {
+    deleteUser(userId: number): Observable<void> {
+      return this.apiService.deleteUser(userId);
+    }
+
+  /*updatePassword(userId: number, newPassword: string): void {
     const users = JSON.parse(localStorage.getItem('users') || '[]');
     const userIndex = users.findIndex((user: User) => user.id === userId);
   
@@ -75,5 +100,13 @@ export class UserService {
       users[userIndex].password = newPassword;
       localStorage.setItem('users', JSON.stringify(users));
     }
-  }
+  }*/
+
+    checkPassword(userId: number, oldPassword: string): Observable<boolean> {
+      return this.apiService.checkPassword(userId, oldPassword);
+    }
+    
+    changePassword(userId: number, newPassword: string): Observable<void> {
+      return this.apiService.changePassword(userId, newPassword);
+    }
 }

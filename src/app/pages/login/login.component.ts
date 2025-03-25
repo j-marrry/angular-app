@@ -39,21 +39,21 @@ export class LoginComponent {
     private authService: AuthService,
     private router: Router,
     private messageService: MessageService,
-    private translocoServise: TranslocoService
+    private translocoService: TranslocoService
   ){}
 
   onLogin(){
     if (!this.login || !this.password) {
       this.messageService.add({
         severity: 'error',
-        summary: this.translocoServise.translate('msgError'),
-        detail: this.translocoServise.translate('msgFill'),
+        summary: this.translocoService.translate('msgError'),
+        detail: this.translocoService.translate('msgFill'),
         sticky: true
       });
       return;
     }
 
-    this.userService.getAllUsers().subscribe({
+    /*this.userService.getAllUsers().subscribe({
       next: (users: User[]) => {
         this.users = users;
         const user = this.users.find(u => u.username === this.login && u.password === this.password);
@@ -63,8 +63,8 @@ export class LoginComponent {
         } else {
           this.messageService.add({
             severity: 'error',
-            summary: this.translocoServise.translate('msgError'),
-            detail: this.translocoServise.translate('msgUsernameOrPassword'),
+            summary: this.translocoService.translate('msgError'),
+            detail: this.translocoService.translate('msgUsernameOrPassword'),
             sticky: true
           });
         }
@@ -72,10 +72,11 @@ export class LoginComponent {
       error: () => {
         this.messageService.add({
           severity: 'error',
-          summary: this.translocoServise.translate('msgError'),
-          detail: this.translocoServise.translate('msgUserData'),
+          summary: this.translocoService.translate('msgError'),
+          detail: this.translocoService.translate('msgUserData'),
         });
       }
-    });
+    });*/
+    this.router.navigate(['/']);
   }
 }

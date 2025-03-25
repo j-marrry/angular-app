@@ -14,6 +14,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { CommonModule } from '@angular/common';
 import { CheckboxModule } from 'primeng/checkbox';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-edit-user',
@@ -76,24 +77,33 @@ export class EditUserComponent {
   }
 
   onSaveChanges() {
-    this.userService.getUserById(this.id).subscribe(user => {
-      if(user?.password)
-      this.password = user.password;
-    })
-
-    const updatedUser: User = {
-      id: this.id,
-      username: this.username,
-      password: this.password,
-      email: this.email,
-      lastname: this.lastname,
-      firstname: this.firstname,
-      middlename: this.middlename,
-      birthdate: this.birthdate,
-      roles: this.userroles
-    };
-
-    this.userService.updateUser(updatedUser);
-    this.messageService.add({ severity: 'success', summary: this.translocoService.translate('msgSuccess'), detail: this.translocoService.translate('msgUserUpdate'), sticky: true });
-  }
+    this.userService.getUserById(this.id).pipe(
+      switchMap(user => {
+        if (user?.password) {
+          this.password = user.password;
+        }
+  
+        const updatedUser: any = {
+          id: this.id,
+          username: this.username,
+          password: this.password,
+          email: this.email,
+          lastname: this.lastname,
+          firstname: this.firstname,
+          patronymic: this.middlename,
+          birthday: this.birthdate,
+          roles: this.userroles
+        };
+  
+        return this.userService.updateUser(updatedUser); // Возвращаем новый запрос
+      })
+    ).subscribe(() => {
+      this.messageService.add({
+        severity: 'success',
+        summary: this.translocoService.translate('msgSuccess'),
+        detail: this.translocoService.translate('msgUserUpdate'),
+        sticky: true
+      });
+    });
+  }  
 }

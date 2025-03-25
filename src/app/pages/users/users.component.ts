@@ -8,6 +8,7 @@ import { User } from '../../models/user';
 import { ButtonModule } from 'primeng/button';
 import { DatePipe } from '@angular/common';
 import { TranslocoModule } from '@jsverse/transloco'
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-users',
@@ -41,9 +42,12 @@ export class UsersComponent {
   }
 
   deleteUser(id: number){
-    this.userService.deleteUser(id);
-    this.userService.getAllUsers().subscribe((users: User[]) => {
-      this.users = users;
+    this.userService.deleteUser(id).pipe(
+      switchMap(() => this.userService.getAllUsers())
+    ).subscribe({
+      next: (users: User[]) => {
+        this.users = users;
+      }
     });
   }
 }
