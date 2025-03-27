@@ -7,15 +7,22 @@ import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 import {preset} from '../assets/preset'
 
-import { HttpClientModule, provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { TranslocoHttpLoader } from './transloco-loader';
 import { provideTransloco } from '@jsverse/transloco';
+import { AuthInterceptor } from './helpers/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     importProvidersFrom(HttpClientModule),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
+    provideHttpClient(withInterceptorsFromDi()),  
+        {
+            provide:HTTP_INTERCEPTORS,
+            useClass:AuthInterceptor,
+            multi:true
+        },
     provideAnimationsAsync(),
         providePrimeNG({
             theme: {

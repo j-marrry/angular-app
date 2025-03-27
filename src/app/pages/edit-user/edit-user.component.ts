@@ -95,7 +95,7 @@ export class EditUserComponent {
           roles: this.userroles
         };
   
-        return this.userService.updateUser(updatedUser); // Возвращаем новый запрос
+        return this.userService.updateUser(updatedUser);
       })
     ).subscribe(() => {
       this.messageService.add({

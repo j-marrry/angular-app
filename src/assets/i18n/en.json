@@ -61,5 +61,7 @@
   "msgUserUpdate": "User updated!",
   "msgFill": "Fill in all fields",
   "msgUsernameOrPassword": "Invalid login or password",
-  "msgUserData": "Failed to load user data"
+  "msgUserData": "Failed to load user data",
+
+  "msgInvalidCredentials": "Invalid username or password."
 }

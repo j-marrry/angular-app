@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { User } from '../../models/user';
 import { LangComponent } from "../lang/lang.component";
 import { TranslocoModule } from '@jsverse/transloco';
+import { TokenStorageService } from '../../services/token-storage.service';
 
 @Component({
   selector: 'app-header',
@@ -16,16 +17,22 @@ import { TranslocoModule } from '@jsverse/transloco';
 })
 export class HeaderComponent {
   user$!: Observable<User | null>;
-  constructor(private authService: AuthService, private router: Router) {}
+  username: string | null = null;
+  isAdmin: boolean = false;
+
+  constructor(private router: Router, private tokenStorage: TokenStorageService) {
+  }
+  
   ngOnInit(): void {
-    this.user$ = this.authService.currentUser$;
+    const currentUser = this.tokenStorage.getUser();
+    if (currentUser) {
+      this.username = currentUser.username;
+      this.isAdmin = currentUser.roles && currentUser.roles.some((role: any) => role.authority === 'ROLE_ADMIN');
+    }
   }
+
   logout() {
-    this.authService.logout();
+    this.tokenStorage.signOut();
     this.router.navigate(['/login']);
-  }
-  isAdmin(): boolean {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-    return currentUser?.roles?.includes('admin');
   }
 }

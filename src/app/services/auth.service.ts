@@ -1,37 +1,26 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { User } from '../models/user';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { TokenStorageService } from './token-storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  user: User | null = this.getCurrentUser();
-  private currentUserSubject: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(this.user);
+  private apiUrl = 'http://localhost:8080';
+  
+  constructor(private http: HttpClient, private tokenStorageService: TokenStorageService){}
 
-  public currentUser$: Observable<User | null> = this.currentUserSubject.asObservable();
-
-  constructor() {}
-
-  setCurrentUser(user: User) {
-    this.currentUserSubject.next(user);
-    localStorage.setItem('currentUser', JSON.stringify(user));
+  login(username: string, password: string): Observable<any>{
+    return this.http.post(`${this.apiUrl}/auth/login`,{
+      username,
+      password
+    });
   }
 
-  getCurrentUser(): User | null {
-    return JSON.parse(localStorage.getItem('currentUser') || 'null');
-  }
-
-  logout() {
-    this.currentUserSubject.next(null);
-    localStorage.removeItem('currentUser');
-  }
-
-  getAllUsers(): User[] {
-    return JSON.parse(localStorage.getItem('users') || '[]');
-  }
-
-  setAllUsers(users: User[]) {
-    localStorage.setItem('users', JSON.stringify(users));
+  logout(): void {
+    this.tokenStorageService.signOut();
   }
 }

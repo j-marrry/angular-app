@@ -32,10 +32,10 @@ export class ApiService {
   }
 
   checkPassword(userId: number, oldPassword: string): Observable<boolean> {
-    return this.http.post<boolean>(`${this.apiUrl}/users/${userId}/check-password`, { oldPassword });
+    return this.http.post<boolean>(`${this.apiUrl}/users/${userId}/check-password`, oldPassword);
   }
   
   changePassword(userId: number, newPassword: string): Observable<void> {
-    return this.http.patch<void>(`${this.apiUrl}/users/${userId}/change-password`, { newPassword });
+    return this.http.patch<void>(`${this.apiUrl}/users/${userId}/change-password`, newPassword);
   }  
 }

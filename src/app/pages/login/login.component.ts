@@ -1,9 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { ButtonModule } from 'primeng/button';
-import { User } from '../../models/user';
-import { UserService } from '../../services/user.service';
 import { MessageService } from 'primeng/api';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -12,6 +10,8 @@ import { MessagesModule } from 'primeng/messages';
 import { ToastModule } from 'primeng/toast';
 import { AuthService } from '../../services/auth.service';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
+import { TokenStorageService } from '../../services/token-storage.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -23,26 +23,27 @@ import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
     HttpClientModule,
     MessagesModule,
     ToastModule,
-    TranslocoModule
+    TranslocoModule,
+    CommonModule
   ],
   providers: [MessageService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  login: string = '';
-  password: string = '';
-  users: User[]=[];
+    login: string = '';
+    password: string = '';
 
   constructor(
-    private userService: UserService,
     private authService: AuthService,
     private router: Router,
     private messageService: MessageService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private tokenStorage: TokenStorageService
   ){}
 
   onLogin(){
+
     if (!this.login || !this.password) {
       this.messageService.add({
         severity: 'error',
@@ -53,30 +54,21 @@ export class LoginComponent {
       return;
     }
 
-    /*this.userService.getAllUsers().subscribe({
-      next: (users: User[]) => {
-        this.users = users;
-        const user = this.users.find(u => u.username === this.login && u.password === this.password);
-        if (user) {
-          this.authService.setCurrentUser(user);
-          this.router.navigate(['/']);
-        } else {
-          this.messageService.add({
+    this.authService.login(this.login, this.password).subscribe({
+      next: data => {
+        this.tokenStorage.saveToken(data.token);
+        this.tokenStorage.saveUser(data.user);
+
+        this.router.navigate(['/']);
+      },
+      error: err => {
+        this.messageService.add({
             severity: 'error',
             summary: this.translocoService.translate('msgError'),
-            detail: this.translocoService.translate('msgUsernameOrPassword'),
+            detail: this.translocoService.translate('msgInvalidCredentials'),
             sticky: true
-          });
-        }
-      },
-      error: () => {
-        this.messageService.add({
-          severity: 'error',
-          summary: this.translocoService.translate('msgError'),
-          detail: this.translocoService.translate('msgUserData'),
         });
-      }
-    });*/
-    this.router.navigate(['/']);
+    }
+    });
   }
 }
